@@ -63,7 +63,14 @@ public class BombController {
     @GetMapping(value = "/bombs", params = {"country"})
     @ResponseStatus(HttpStatus.OK)
     public Collection<Bomb> findBombByCountry(String country) {
-        return bombService.findBombByName(country);
+        return bombService.findBombByCountry(country);
+    }
+
+    @GetMapping(value = "/bombs", params = {"weight"})
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<Bomb> findBombByWeight(int weight) {
+        return bombService.findBombByWeight(weight);
+
     }
 }
 

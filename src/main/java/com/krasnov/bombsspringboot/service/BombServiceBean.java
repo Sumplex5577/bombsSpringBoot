@@ -71,8 +71,17 @@ public class BombServiceBean implements BombService {
     @Override
     public Collection<Bomb> findBombByCountry(String country) {
         log.info("findBombByCountry () - start: name = {}", country);
-        Collection<Bomb> collection = bombRepository.findByName(country);
+        Collection<Bomb> collection = bombRepository.findByCountry(country);
         log.info("findBombByCountry() - end: collection = {}", collection);
+        return collection;
+
+    }
+
+    @Override
+    public Collection<Bomb> findBombByWeight(int weight) {
+        log.info("findBombByWeight () - start: name = {}", weight);
+        Collection<Bomb> collection = bombRepository.findByWeight(weight);
+        log.info("findBombByWeight() - end: collection = {}", collection);
         return collection;
     }
 
