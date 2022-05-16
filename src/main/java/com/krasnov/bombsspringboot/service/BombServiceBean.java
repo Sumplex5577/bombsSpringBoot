@@ -2,16 +2,18 @@ package com.krasnov.bombsspringboot.service;
 
 import com.krasnov.bombsspringboot.domain.Bomb;
 import com.krasnov.bombsspringboot.repository.BombRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDateTime;
+import java.util.Collection;
 import java.util.List;
 
 
 @Service
-
+@Slf4j
 public class BombServiceBean implements BombService {
 
     private final BombRepository bombRepository;
@@ -59,8 +61,19 @@ public class BombServiceBean implements BombService {
     }
 
     @Override
-    public List<Bomb> findBombByName(String name) {
-        return null;
+    public Collection<Bomb> findBombByName(String name) {
+        log.info("findBombByName () - start: name = {}", name);
+        Collection<Bomb> collection = bombRepository.findByName(name);
+        log.info("findBombByName() - end: collection = {}", collection);
+        return collection;
+
+    }
+    @Override
+    public Collection<Bomb> findBombByCountry(String country) {
+        log.info("findBombByCountry () - start: name = {}", country);
+        Collection<Bomb> collection = bombRepository.findByName(country);
+        log.info("findBombByCountry() - end: collection = {}", collection);
+        return collection;
     }
 
     private void checkDate(Bomb bomb) {

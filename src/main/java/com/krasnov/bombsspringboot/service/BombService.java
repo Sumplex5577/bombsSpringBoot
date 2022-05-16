@@ -2,6 +2,7 @@ package com.krasnov.bombsspringboot.service;
 
 import com.krasnov.bombsspringboot.domain.Bomb;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface BombService {
@@ -23,6 +24,8 @@ public interface BombService {
     void delete(Integer id);
 
     void deleteAll();
-    List<Bomb> findBombByName(String name);
+    Collection<Bomb> findBombByName(String name);
+
+    Collection<Bomb> findBombByCountry(String country);
 }
 

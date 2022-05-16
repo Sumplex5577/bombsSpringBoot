@@ -46,10 +46,24 @@ public class BombController {
     public void removeBomb(@PathVariable Integer id) {
         bombService.delete(id);
     }
+
     @DeleteMapping("/bombs")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeAllBombs() {
         bombService.deleteAll();
+    }
+
+    @GetMapping(value = "/bombs", params = {"name"})
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<Bomb> findBombByName(String name) {
+        return bombService.findBombByName(name);
+
+    }
+
+    @GetMapping(value = "/bombs", params = {"country"})
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<Bomb> findBombByCountry(String country) {
+        return bombService.findBombByName(country);
     }
 }
 

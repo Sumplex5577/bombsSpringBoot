@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface BombRepository extends JpaRepository<Bomb, Integer> {
     List<Bomb> findByName(String name);
+    List<Bomb> findByCounntry(String country);
 }

@@ -16,7 +16,7 @@ public class Bomb {
     private String country;
    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
    private LocalDateTime date;
-   private boolean isNuclear;
+  // private boolean isNuclear;
 
     public Integer getId() {
         return id;
@@ -58,13 +58,13 @@ public class Bomb {
         this.date = date;
     }
 
-    public boolean isNuclear() {
-        return isNuclear;
-    }
-
-    public void setNuclear(boolean nuclear) {
-        isNuclear = nuclear;
-    }
+//   public boolean isNuclear() {
+//        return isNuclear;
+//    }
+//
+//    public void setNuclear(boolean nuclear) {
+//        isNuclear = nuclear;
+//    }
 }
 
 
