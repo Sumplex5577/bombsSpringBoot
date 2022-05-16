@@ -57,6 +57,12 @@ public class BombServiceBean implements BombService {
     public void deleteAll() {
         bombRepository.deleteAll();
     }
+
+    @Override
+    public List<Bomb> findBombByName(String name) {
+        return null;
+    }
+
     private void checkDate(Bomb bomb) {
         if (bomb.getDate().isBefore(ChronoLocalDateTime.from(LocalDate.of(12,5,3)))){
             throw new RuntimeException("Bomb is very old, you can't use it!");

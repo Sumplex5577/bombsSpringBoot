@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import com.krasnov.bombsspringboot.service.BombService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class BombController {
 
     @GetMapping("/bombs")
     @ResponseStatus(HttpStatus.OK)
-    public List<Bomb> getAllBombs() {
+    public Collection<Bomb> getAllBombs() {
         return bombService.view();
     }
 

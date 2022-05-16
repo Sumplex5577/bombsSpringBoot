@@ -1,4 +1,6 @@
 package com.krasnov.bombsspringboot.domain;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -7,11 +9,14 @@ import java.time.LocalDateTime;
 public class Bomb {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
     private Integer id;
     private String name;
     private int weight;
     private String country;
-    private LocalDateTime date;
+   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+   private LocalDateTime date;
+   private boolean isNuclear;
 
     public Integer getId() {
         return id;
@@ -51,6 +56,14 @@ public class Bomb {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public boolean isNuclear() {
+        return isNuclear;
+    }
+
+    public void setNuclear(boolean nuclear) {
+        isNuclear = nuclear;
     }
 }
 

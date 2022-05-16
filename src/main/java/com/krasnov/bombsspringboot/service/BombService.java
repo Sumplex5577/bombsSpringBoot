@@ -23,5 +23,6 @@ public interface BombService {
     void delete(Integer id);
 
     void deleteAll();
+    List<Bomb> findBombByName(String name);
 }
 
