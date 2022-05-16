@@ -2,6 +2,7 @@ package com.krasnov.bombsspringboot.service;
 
 import com.krasnov.bombsspringboot.domain.Bomb;
 import com.krasnov.bombsspringboot.repository.BombRepository;
+import com.krasnov.bombsspringboot.service.BombService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -84,6 +85,14 @@ public class BombServiceBean implements BombService {
         log.info("findBombByWeight() - end: collection = {}", collection);
         return collection;
     }
+    @Override
+    public Collection<Bomb> findBombByNuclear() {
+        log.info("findBombByNuclear() - start:");
+        Collection<Bomb> collection = bombRepository.findByNuclear();
+        log.info("findBombByNuclear() - end: collection = {}", collection);
+        return collection;
+    }
+
 
     private void checkDate(Bomb bomb) {
         if (bomb.getDate().isBefore(ChronoLocalDateTime.from(LocalDate.of(12,5,3)))){

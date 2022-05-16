@@ -72,8 +72,13 @@ public class BombController {
         return bombService.findBombByWeight(weight);
 
     }
-}
 
+    @GetMapping(value = "/bombs/nuclears")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<Bomb> findBombByNuclear() {
+        return bombService.findBombByNuclear();
+    }
+}
 
 
 

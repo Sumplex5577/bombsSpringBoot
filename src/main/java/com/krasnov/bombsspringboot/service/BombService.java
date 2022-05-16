@@ -29,5 +29,7 @@ public interface BombService {
     Collection<Bomb> findBombByCountry(String country);
 
     Collection<Bomb> findBombByWeight(int weight);
+
+    Collection<Bomb> findBombByNuclear();
 }
 
