@@ -2,7 +2,6 @@ package com.krasnov.bombsspringboot.service;
 
 import com.krasnov.bombsspringboot.domain.Bomb;
 import com.krasnov.bombsspringboot.repository.BombRepository;
-import com.krasnov.bombsspringboot.service.BombService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.Collection;
 import java.util.List;
-
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -34,8 +33,12 @@ public class BombServiceBean implements BombService {
 
     @Override
     public Bomb viewById(Integer id) {
-        //return bombRepository.getById(id);
-        return bombRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity Not Found with id: " + id));
+        Bomb bomb = bombRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Bomb was not found with id = " + id));
+        if(bomb.getDeleted() || bomb.getDeleted()==null) { //в чем разница между двойным == and equals
+            throw new EntityNotFoundException("Bomb was Deleted");
+        }
+        return bomb;
     }
 
     @Override
@@ -53,8 +56,14 @@ public class BombServiceBean implements BombService {
 
     @Override
     public void delete(Integer id) {
-        bombRepository.deleteById(id);
+        Bomb bomb = bombRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Bomb not found with id = " + id));
+        bomb.setDeleted(Boolean.TRUE);
+        bombRepository.save(bomb);
+
+        //        bombRepository.deleteById(id);
     }
+
 
     @Override
     public void deleteAll() {

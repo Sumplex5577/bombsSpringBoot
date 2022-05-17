@@ -1,8 +1,10 @@
 package com.krasnov.bombsspringboot.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "bombs")
@@ -17,6 +19,10 @@ public class Bomb {
    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
    private LocalDateTime date;
    private boolean isNuclear;
+@JsonIgnore
+   private Boolean isDeleted;
+
+
 
     public Integer getId() {
         return id;
@@ -64,6 +70,27 @@ public class Bomb {
 
     public void setNuclear(boolean nuclear) {
         isNuclear = nuclear;
+    }
+    @JsonIgnore
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bomb bomb = (Bomb) o;
+        return weight == bomb.weight && isNuclear == bomb.isNuclear && id.equals(bomb.id) && name.equals(bomb.name) && country.equals(bomb.country) && date.equals(bomb.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, weight, country, date, isNuclear);
     }
 }
 

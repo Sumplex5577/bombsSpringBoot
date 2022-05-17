@@ -41,9 +41,9 @@ public class BombController {
         return bombService.viewById(id);
     }
 
-    @DeleteMapping("/bombs/{id}")
+    @PatchMapping("/bombs/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeBomb(@PathVariable Integer id) {
+    public void removeBomb(@PathVariable Integer id) { //write message to client "bomb was deleted by ID"
         bombService.delete(id);
     }
 
