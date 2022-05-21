@@ -16,12 +16,11 @@ public class Bomb {
     private String name;
     private int weight;
     private String country;
-   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-   private LocalDateTime date;
-   private boolean isNuclear;
-@JsonIgnore
-   private Boolean isDeleted;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime date;
+    private boolean isNuclear;
+    @JsonIgnore
+    private Boolean isDeleted = Boolean.FALSE;
 
 
     public Integer getId() {
@@ -66,11 +65,12 @@ public class Bomb {
 
     public boolean isNuclear() {
         return isNuclear;
-   }
+    }
 
     public void setNuclear(boolean nuclear) {
         isNuclear = nuclear;
     }
+
     @JsonIgnore
     public Boolean getDeleted() {
         return isDeleted;
@@ -92,7 +92,19 @@ public class Bomb {
     public int hashCode() {
         return Objects.hash(id, name, weight, country, date, isNuclear);
     }
+
+    public String toString() {
+        return "Plane {" +
+                "id = " + id +
+                ", name = '" + name + '\'' +
+                ", ammunition = " + weight +
+                ", isFighter = " + country +
+                ", creationDate = " + date +
+                ", crewQuantity = " + isNuclear + "}";
+
+    }
 }
+
 
 
 

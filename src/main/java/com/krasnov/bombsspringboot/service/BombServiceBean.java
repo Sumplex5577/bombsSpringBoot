@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Service
 @Slf4j
 public class BombServiceBean implements BombService {
@@ -21,6 +23,7 @@ public class BombServiceBean implements BombService {
     public BombServiceBean(BombRepository bombRepository) {
         this.bombRepository = bombRepository;
     }
+
     @Override
     public Bomb create(Bomb bomb) {
         return bombRepository.save(bomb);
@@ -33,12 +36,15 @@ public class BombServiceBean implements BombService {
 
     @Override
     public Bomb viewById(Integer id) {
-        Bomb bomb = bombRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Bomb was not found with id = " + id));
-        if(bomb.getDeleted() || bomb.getDeleted()==null) { //в чем разница между двойным == and equals
+        Bomb bomb = returnBomb(id);
+        checkDeleted(bomb);
+        return returnBomb(id);
+    }
+
+    private void checkDeleted(Bomb bomb) {
+        if (bomb.getDeleted() == null || bomb.getDeleted()) {
             throw new EntityNotFoundException("Bomb was Deleted");
         }
-        return bomb;
     }
 
     @Override
@@ -57,7 +63,7 @@ public class BombServiceBean implements BombService {
     @Override
     public void delete(Integer id) {
         Bomb bomb = bombRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException("Bomb not found with id = " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Bomb not found with id = " + id));
         bomb.setDeleted(Boolean.TRUE);
         bombRepository.save(bomb);
 
@@ -78,6 +84,7 @@ public class BombServiceBean implements BombService {
         return collection;
 
     }
+
     @Override
     public Collection<Bomb> findBombByCountry(String country) {
         log.info("findBombByCountry () - start: name = {}", country);
@@ -94,6 +101,7 @@ public class BombServiceBean implements BombService {
         log.info("findBombByWeight() - end: collection = {}", collection);
         return collection;
     }
+
     @Override
     public Collection<Bomb> findBombByNuclear() {
         log.info("findBombByNuclear() - start:");
@@ -104,11 +112,24 @@ public class BombServiceBean implements BombService {
 
 
     private void checkDate(Bomb bomb) {
-        if (bomb.getDate().isBefore(ChronoLocalDateTime.from(LocalDate.of(12,5,3)))){
+        if (bomb.getDate().isBefore(ChronoLocalDateTime.from(LocalDate.of(12, 5, 3)))) {
             throw new RuntimeException("Bomb is very old, you can't use it!");
-
-
         }
+
+    }
+
+    /**
+     * techinal method that return Bomb by id or throw EntityNotFoundException
+     * @param id - id of bomb that should be returned
+     * @return
+     */
+
+    private Bomb returnBomb(Integer id) {
+        return bombRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Bomb with such id doesn't exist"));
     }
 }
+
+
+
+
 

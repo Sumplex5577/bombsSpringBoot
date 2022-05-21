@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import com.krasnov.bombsspringboot.service.BombService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
 import java.util.List;
 
@@ -37,9 +38,19 @@ public class BombController {
 
     @GetMapping("/bombs/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Bomb getBomb(@PathVariable Integer id) {
-        return bombService.viewById(id);
+    public String viewById(@PathVariable Integer id) {
+        try {
+            return bombService.viewById(id).toString();
+        }catch (EntityNotFoundException e) {
+            return e.getLocalizedMessage();
+        }
     }
+
+//    @GetMapping("/bombs/{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public Bomb getBomb(@PathVariable Integer id) {
+//        return bombService.viewById(id);
+//    }
 
     @PatchMapping("/bombs/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
