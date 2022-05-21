@@ -62,10 +62,8 @@ public class BombServiceBean implements BombService {
 
     @Override
     public void delete(Integer id) {
-        Bomb bomb = bombRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Bomb not found with id = " + id));
-        bomb.setDeleted(Boolean.TRUE);
-        bombRepository.save(bomb);
+        returnBomb(id).setDeleted(Boolean.TRUE);
+        bombRepository.save(returnBomb(id));
 
         //        bombRepository.deleteById(id);
     }
