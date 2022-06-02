@@ -17,5 +17,12 @@ spring:
     generate-ddl: true
 # Server configuration
 server:
-  port: 8083 #set your port
+  port: 8088 #set your port
+# Logger configuration
+logging:
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+  level:
+    org.springframework: info
+    org.hibernate: info
 

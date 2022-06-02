@@ -1,8 +1,6 @@
 package com.krasnov.bombsspringboot.service;
-
 import com.krasnov.bombsspringboot.domain.Bomb;
 import org.springframework.stereotype.Service;
-
 import java.util.Collection;
 import java.util.List;
 

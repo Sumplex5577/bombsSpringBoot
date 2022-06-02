@@ -21,6 +21,7 @@ public class BombController {
     @PostMapping("/bombs")
     @ResponseStatus(HttpStatus.CREATED)
     public Bomb createBomb(@RequestBody Bomb bomb) {
+        System.out.println("Bomb was saved to database successfully");
         return bombService.create(bomb);
     }
 
@@ -37,7 +38,7 @@ public class BombController {
     }
 
     @GetMapping("/bombs/{id}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK) // just in case double check!!!
     public String viewById(@PathVariable Integer id) {
         try {
             return bombService.viewById(id).toString();

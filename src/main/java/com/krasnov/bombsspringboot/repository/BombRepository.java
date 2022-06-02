@@ -15,5 +15,6 @@ public interface BombRepository extends JpaRepository<Bomb, Integer> {
     List<Bomb> findByWeight(int weight);
 
     @Query("select b from Bomb b where b.isNuclear = true")
+
     List<Bomb> findByNuclear();
 }
