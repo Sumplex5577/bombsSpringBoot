@@ -30,5 +30,7 @@ public interface BombService {
     Collection<Bomb> findBombByWeight(int weight);
 
     Collection<Bomb> findBombByNuclear();
+
+   // Collection<Bomb> findAllByDeletedIsFalse();
 }
 

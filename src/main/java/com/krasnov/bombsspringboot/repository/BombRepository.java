@@ -16,5 +16,8 @@ public interface BombRepository extends JpaRepository<Bomb, Integer> {
 
     @Query("select b from Bomb b where b.isNuclear = true")
 
+ //   @Query("select b from Bomb b where b.isNuclear = true or b.isDeleted = false ")
+
     List<Bomb> findByNuclear();
+  //  List<Bomb> findAllByDeletedIsFalse();
 }

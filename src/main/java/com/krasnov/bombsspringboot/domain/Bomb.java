@@ -104,10 +104,10 @@ public class Bomb {
         return "Plane {" +
                 "id = " + id +
                 ", name = '" + name + '\'' +
-                ", ammunition = " + weight +
-                ", isFighter = " + country +
-                ", creationDate = " + date +
-                ", crewQuantity = " + isNuclear + "}";
+                ", weight = " + weight +
+                ", country = " + country +
+                ", date = " + date +
+                ", isNuclear = " + isNuclear + "}";
 
     }
 }

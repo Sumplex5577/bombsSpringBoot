@@ -19,9 +19,9 @@ public class BombController {
     }
 
     @PostMapping("/bombs")
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(value = HttpStatus.CREATED,reason = "Bomb Created")
     public Bomb createBomb(@RequestBody Bomb bomb) {
-        System.out.println("Bomb was saved to database successfully");
+     //   System.out.println("Bomb was saved to database successfully");
         return bombService.create(bomb);
     }
 
@@ -47,11 +47,12 @@ public class BombController {
         }
     }
 
-//    @GetMapping("/bombs/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public Bomb getBomb(@PathVariable Integer id) {
-//        return bombService.viewById(id);
-//    }
+    @GetMapping("/bombs/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Bomb getBomb(@PathVariable Integer id) {
+        Bomb bomb = bombService.viewById(id);
+        return bomb;
+    }
 
     @PatchMapping("/bombs/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

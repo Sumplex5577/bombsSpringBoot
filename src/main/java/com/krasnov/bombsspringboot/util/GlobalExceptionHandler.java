@@ -29,6 +29,20 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(ResourceNotExistException.class)
+    protected ResponseEntity<MyGlobalExceptionHandler> handlerNotExistException() {
+        return new ResponseEntity<>(new MyGlobalExceptionHandler("This bomb does not exist"), HttpStatus.NOT_FOUND);
+
+    }
+
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(new MyGlobalExceptionHandler("This bomb was deleted"), HttpStatus.NOT_FOUND);
+
+    }
+
+
     @Data
     @AllArgsConstructor
     private static class MyGlobalExceptionHandler {

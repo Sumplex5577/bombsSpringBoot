@@ -2,6 +2,7 @@ package com.krasnov.bombsspringboot.service;
 
 import com.krasnov.bombsspringboot.domain.Bomb;
 import com.krasnov.bombsspringboot.repository.BombRepository;
+import com.krasnov.bombsspringboot.util.ResourceNotExistException;
 import com.krasnov.bombsspringboot.util.ResourceNotFoundException;
 import com.krasnov.bombsspringboot.util.ResourceWasDeletedException;
 import lombok.AllArgsConstructor;
@@ -32,12 +33,15 @@ public class BombServiceBean implements BombService {
 
     @Override
     public Bomb viewById(Integer id) {
-        Bomb bomb = returnBomb(id);
+       log.info("viewById() - start: id = {}", id);
+        Bomb bomb = getBomb(id);
+        log.debug("viewById()->checkDeleted() - start: id = {}", id);
         checkDeleted(bomb);
-        return returnBomb(id);
+        return getBomb(id);
     }
 
     private void checkDeleted(Bomb bomb) {
+       log.info("checkDeleted() - start: id = {}", bomb.getId());
         if (bomb.getDeleted() == null || bomb.getDeleted()) {
             throw new EntityNotFoundException("Bomb was Deleted");
         }
@@ -67,8 +71,10 @@ public class BombServiceBean implements BombService {
 //        Bomb bomb = getBomb(id);
 //        bomb.setDeleted(Boolean.TRUE);
 //        bombRepository.save(bomb);
-        Bomb bomb = bombRepository.findById(id).orElseThrow(ResourceWasDeletedException::new);
-        bombRepository.delete(bomb);
+        Bomb bomb = bombRepository.findById(id).orElseThrow(ResourceNotExistException::new);
+        checkDeleted(bomb);
+        bomb.setDeleted(Boolean.TRUE);
+        bombRepository.save(bomb);
     }
     @Override
     public void deleteAll() {
