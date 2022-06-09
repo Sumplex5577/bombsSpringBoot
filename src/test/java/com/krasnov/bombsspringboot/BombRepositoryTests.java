@@ -81,14 +81,11 @@ public class BombRepositoryTests {
     @Rollback(value = false)
     public void deleteBombTest(){
         Bomb bomb = bombRepository.findById(1).get();
-
         bombRepository.delete(bomb);
-
         List<Bomb> bomb1 = null;
-
-          Optional<List<Bomb>> optionalAuthor = Optional.ofNullable(bombRepository.findByName("Iskander"));
-        if (optionalAuthor.isPresent()) {
-            bomb1 = optionalAuthor.get();
+        Optional<List<Bomb>> optionalBomb = Optional.ofNullable(bombRepository.findByName("Iskander"));
+        if (optionalBomb.isPresent()) {
+            bomb1 = optionalBomb.get();
         }
 
         Assertions.assertThat(bomb1).isEmpty();

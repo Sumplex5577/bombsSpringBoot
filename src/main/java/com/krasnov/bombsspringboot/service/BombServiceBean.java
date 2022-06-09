@@ -2,9 +2,9 @@ package com.krasnov.bombsspringboot.service;
 
 import com.krasnov.bombsspringboot.domain.Bomb;
 import com.krasnov.bombsspringboot.repository.BombRepository;
-import com.krasnov.bombsspringboot.util.ResourceNotExistException;
-import com.krasnov.bombsspringboot.util.ResourceNotFoundException;
-import com.krasnov.bombsspringboot.util.ResourceWasDeletedException;
+import com.krasnov.bombsspringboot.utils.exception.ResourceNotExistException;
+import com.krasnov.bombsspringboot.utils.exception.ResourceNotFoundException;
+import com.krasnov.bombsspringboot.utils.exception.ResourceWasDeletedException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

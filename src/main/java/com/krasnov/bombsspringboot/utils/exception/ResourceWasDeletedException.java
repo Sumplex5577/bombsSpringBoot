@@ -1,9 +1,9 @@
-package com.krasnov.bombsspringboot.util;
+package com.krasnov.bombsspringboot.utils.exception;
+
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotExistException  extends RuntimeException {
-
+public class ResourceWasDeletedException extends RuntimeException {
 }

@@ -1,4 +1,4 @@
-package com.krasnov.bombsspringboot.util;
+package com.krasnov.bombsspringboot.utils.exception;
 
 
 import org.springframework.http.HttpStatus;
