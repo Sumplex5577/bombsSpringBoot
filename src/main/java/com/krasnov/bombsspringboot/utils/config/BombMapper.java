@@ -1,15 +1,16 @@
 package com.krasnov.bombsspringboot.utils.config;
 
 import com.krasnov.bombsspringboot.domain.Bomb;
+import com.krasnov.bombsspringboot.dto.BombDeleteDto;
 import com.krasnov.bombsspringboot.dto.BombDto;
-import ma.glasnost.orika.CustomMapper;
-import ma.glasnost.orika.MappingContext;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
-public class BombMapper extends CustomMapper<Bomb, BombDto> {
+@Mapper
+public interface BombMapper {
+    BombMapper INSTANCE = Mappers.getMapper(BombMapper.class);
+    BombDto bombToBombDto(Bomb bomb);
+    Bomb bombDtoToBomb(BombDto dto);
 
-    @Override
-    public void mapBtoA(BombDto dto, Bomb bomb, MappingContext context) {
-        super.mapBtoA(dto, bomb, context);
-    }
-
+    BombDeleteDto bombToBombDeleteDto(Bomb bomb);
 }

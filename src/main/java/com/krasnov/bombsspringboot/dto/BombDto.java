@@ -9,14 +9,16 @@ import java.time.LocalDateTime;
 
 public class BombDto {
 
-    @NotNull(message = "Name must be filled")
+
+    @NotNull(message = "Name may not be null")
     @Size(min = 2, max = 32, message = "Name must be between 2 and 32 characters long")
+
 
     public String name;
 
     public int weight;
 
-    @NotNull
+    @NotNull(message = "field isNuclear must be filled")
     public boolean isNuclear;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")

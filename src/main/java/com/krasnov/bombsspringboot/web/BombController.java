@@ -1,35 +1,44 @@
 package com.krasnov.bombsspringboot.web;
 import com.krasnov.bombsspringboot.domain.Bomb;
+import com.krasnov.bombsspringboot.dto.BombDto;
+import com.krasnov.bombsspringboot.utils.config.BombMapper;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import com.krasnov.bombsspringboot.service.BombService;
 
-import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+@AllArgsConstructor
+@Slf4j
 public class BombController {
     private final BombService bombService;
 
-    public BombController(BombService bombService) {
-        this.bombService = bombService;
-    }
-
     @PostMapping("/bombs")
     @ResponseStatus(value = HttpStatus.CREATED,reason = "Bomb Created")
-    public Bomb createBomb(@RequestBody Bomb bomb) {
-     //   System.out.println("Bomb was saved to database successfully");
-        return bombService.create(bomb);
+    public BombDto createBomb(@RequestBody @Valid BombDto bombForSave) {
+        Bomb bomb = BombMapper.INSTANCE.bombDtoToBomb(bombForSave);;
+        return BombMapper.INSTANCE.bombToBombDto(bomb);
     }
 
-    @PutMapping("/bombs/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
-        return bombService.update(id, bomb);
-    }
+//    @PutMapping("/bombs/{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
+//        return bombService.update(id, bomb);
+//    }
+@PutMapping("/planes/{id}")
+@ResponseStatus(HttpStatus.OK)
+public BombDto putBomb(@RequestBody @Valid BombDto bombForUpdate, @PathVariable Integer id) {
+    log.debug("updateById() Controller - start: id = {}", id);
+    Bomb bomb = BombMapper.INSTANCE.bombDtoToBomb(bombForUpdate);
+    log.debug("updateById() Controller - end: id = {}", id);
+    return BombMapper.INSTANCE.bombToBombDto(bomb);
+}
 
     @GetMapping("/bombs")
     @ResponseStatus(HttpStatus.OK)
@@ -39,19 +48,26 @@ public class BombController {
 
     @GetMapping("/bombs/{id}")
     @ResponseStatus(HttpStatus.OK) // just in case double check!!!
-    public String viewById(@PathVariable Integer id) {
-        try {
-            return bombService.viewById(id).toString();
-        }catch (EntityNotFoundException e) {
-            return e.getLocalizedMessage();
-        }
+    public BombDto viewById(@PathVariable Integer id) {
+    log.debug("viewById() Controller - start: id = {}", id);
+    Bomb bomb = bombService.viewById(id);
+    log.debug("viewById() Controller - to dto start: id = {}", id);
+    BombDto dto = BombMapper.INSTANCE.bombToBombDto(bomb);
+    log.debug("viewById() Controller - end: name = {}", dto.name);
+    return dto;
+
+
     }
 
     @GetMapping("/bombs/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Bomb getBomb(@PathVariable Integer id) {
+    public BombDto getBomb(@PathVariable Integer id) {
+        log.debug("getBomb() Controller - start: id = {}", id);
         Bomb bomb = bombService.viewById(id);
-        return bomb;
+        log.debug("getById() Controller - to dto start: id = {}", id);
+        BombDto dto = BombMapper.INSTANCE.bombToBombDto(bomb);
+        log.debug("getById() Controller - end: name = {}", dto.name);
+        return dto;
     }
 
     @PatchMapping("/bombs/{id}")
