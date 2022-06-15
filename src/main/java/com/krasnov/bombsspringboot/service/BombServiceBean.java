@@ -22,8 +22,11 @@ public class BombServiceBean implements BombService {
 
     @Override
     public Bomb create(Bomb bomb) {
-        //checkDate(bomb);
-        return bombRepository.save(bomb);
+        log.info("create() - start: plane = {}", bomb);
+        Bomb saved = bombRepository.save(bomb);
+        log.info("create() - end: id = {}", saved.getId());
+        return saved;
+
     }
 
     @Override

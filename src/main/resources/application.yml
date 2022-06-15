@@ -1,5 +1,10 @@
 # Spring Boot configuration
 spring:
+  #Security
+  security:
+    user:
+      name: admin
+      password: admin
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -17,7 +22,7 @@ spring:
     generate-ddl: true
 # Server configuration
 server:
-  port: 8088 #set your port
+  port: 8080 #set your port
 # Logger configuration
 logging:
   pattern:

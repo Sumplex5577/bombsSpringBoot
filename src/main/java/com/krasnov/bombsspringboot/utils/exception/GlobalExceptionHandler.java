@@ -25,7 +25,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceWasDeletedException.class)
     protected ResponseEntity<MyGlobalExceptionHandler> handleDeleteException() {
-        return new ResponseEntity<>(new MyGlobalExceptionHandler("This bomb was deleted"), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new MyGlobalExceptionHandler("The validation is failed"), HttpStatus.NOT_FOUND);
 
     }
 

@@ -1,7 +1,9 @@
 package com.krasnov.bombsspringboot.web;
 import com.krasnov.bombsspringboot.domain.Bomb;
 import com.krasnov.bombsspringboot.dto.BombDto;
+import com.krasnov.bombsspringboot.utils.config.BombConverter;
 import com.krasnov.bombsspringboot.utils.config.BombMapper;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import com.krasnov.bombsspringboot.service.BombService;
 import javax.validation.Valid;
 import java.util.Collection;
 
+
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
@@ -19,25 +22,26 @@ import java.util.Collection;
 public class BombController {
     private final BombService bombService;
 
+    private final BombConverter bombConverter;
+
     @PostMapping("/bombs")
     @ResponseStatus(value = HttpStatus.CREATED,reason = "Bomb Created")
-    public BombDto createBomb(@RequestBody @Valid BombDto bombForSave) {
-        Bomb bomb = BombMapper.INSTANCE.bombDtoToBomb(bombForSave);;
-        return BombMapper.INSTANCE.bombToBombDto(bomb);
+    public BombDto createBomb(@RequestBody @Valid BombDto requestForSave) {
+       var bomb = bombConverter.getMapperFacade().map(requestForSave, Bomb.class);
+       var dto = bombConverter.toDto(bombService.create(bomb));
+       return dto;
     }
+
 
 //    @PutMapping("/bombs/{id}")
 //    @ResponseStatus(HttpStatus.OK)
 //    public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
 //        return bombService.update(id, bomb);
 //    }
-@PutMapping("/planes/{id}")
+@PutMapping("/bombs/{id}")
 @ResponseStatus(HttpStatus.OK)
-public BombDto putBomb(@RequestBody @Valid BombDto bombForUpdate, @PathVariable Integer id) {
-    log.debug("updateById() Controller - start: id = {}", id);
-    Bomb bomb = BombMapper.INSTANCE.bombDtoToBomb(bombForUpdate);
-    log.debug("updateById() Controller - end: id = {}", id);
-    return BombMapper.INSTANCE.bombToBombDto(bomb);
+public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
+    return bombService.update(id, bomb);
 }
 
     @GetMapping("/bombs")
@@ -48,26 +52,9 @@ public BombDto putBomb(@RequestBody @Valid BombDto bombForUpdate, @PathVariable 
 
     @GetMapping("/bombs/{id}")
     @ResponseStatus(HttpStatus.OK) // just in case double check!!!
-    public BombDto viewById(@PathVariable Integer id) {
-    log.debug("viewById() Controller - start: id = {}", id);
-    Bomb bomb = bombService.viewById(id);
-    log.debug("viewById() Controller - to dto start: id = {}", id);
-    BombDto dto = BombMapper.INSTANCE.bombToBombDto(bomb);
-    log.debug("viewById() Controller - end: name = {}", dto.name);
-    return dto;
-
-
-    }
-
-    @GetMapping("/bombs/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public BombDto getBomb(@PathVariable Integer id) {
-        log.debug("getBomb() Controller - start: id = {}", id);
+    public Bomb getBomb(@PathVariable Integer id) {
         Bomb bomb = bombService.viewById(id);
-        log.debug("getById() Controller - to dto start: id = {}", id);
-        BombDto dto = BombMapper.INSTANCE.bombToBombDto(bomb);
-        log.debug("getById() Controller - end: name = {}", dto.name);
-        return dto;
+        return bomb;
     }
 
     @PatchMapping("/bombs/{id}")
