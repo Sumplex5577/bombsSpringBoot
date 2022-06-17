@@ -24,19 +24,13 @@ import java.util.Collection;
 @AllArgsConstructor
 @Slf4j
 @Tag(name = "Bomb",description = "Bomb API")
-public class BombController {
+public class BombController implements BombSwagger {
     private final BombService bombService;
 
     private final BombConverter bombConverter;
 
     @PostMapping("/bombs")
     @ResponseStatus(value = HttpStatus.CREATED,reason = "Bomb Created")
-    @Operation(summary = "This is endpoint to add a new bomb", description = "Create request to add a new bomb", tags = {"Bomb"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "CREATED. The new bomb is successfully created and added to database"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified bomb request not found"),
-            @ApiResponse(responseCode = "409", description = "Bomb already exists")})
     public BombDto createBomb(@RequestBody @Valid BombDto requestForSave) {
        var bomb = bombConverter.getMapperFacade().map(requestForSave, Bomb.class);
        var dto = bombConverter.toDto(bombService.create(bomb));
@@ -47,12 +41,7 @@ public class BombController {
 
 @PutMapping("/bombs/{id}")
 @ResponseStatus(HttpStatus.OK)
-@Operation(summary = "This is endpoint to change bomb by ID", description = "Create request to change bomb by ID", tags = {"Bomb"})
-@ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "UPDATED. This bomb is successfully updated and added to database"),
-        @ApiResponse(responseCode = "400", description = "Invalid input"),
-        @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified bomb request not found"),
-        @ApiResponse(responseCode = "409", description = "Bomb already exists")})
+
 public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
     return bombService.update(id, bomb);
 }
@@ -67,12 +56,6 @@ public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
 
     @GetMapping("/bombs/{id}")
     @ResponseStatus(HttpStatus.OK) // just in case double check!!!
-    @Operation(summary = "This is endpoint to view bomb by ID", description = "Create request to view bomb by ID", tags = {"Bomb"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "OK. Pls see requested bomb by ID"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified bomb request not found"),
-            @ApiResponse(responseCode = "409", description = "Bomb already exists")})
     public Bomb getBomb(@PathVariable Integer id) {
         Bomb bomb = bombService.viewById(id);
         return bomb;
@@ -80,7 +63,6 @@ public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
 
     @PatchMapping("/bombs/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "This is endpoint to safe delete bomb by ID", description = "Create request to safe delete bomb by ID", tags = {"Bomb"})
     public void removeBomb(@PathVariable Integer id) { //write message to client "bomb was deleted by ID"
         bombService.delete(id);
     }
