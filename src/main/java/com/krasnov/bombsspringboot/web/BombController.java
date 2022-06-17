@@ -19,12 +19,13 @@ import javax.validation.Valid;
 import java.util.Collection;
 
 
-@RestController
-@RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
-@AllArgsConstructor
-@Slf4j
-@Tag(name = "Bomb",description = "Bomb API")
-public class BombController implements BombSwagger {
+    @RestController
+    @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
+    @AllArgsConstructor
+    @Slf4j
+
+   public class BombController implements BombSwagger {
+
     private final BombService bombService;
 
     private final BombConverter bombConverter;
@@ -39,15 +40,14 @@ public class BombController implements BombSwagger {
 
 
 
-@PutMapping("/bombs/{id}")
-@ResponseStatus(HttpStatus.OK)
+    @PutMapping("/bombs/{id}")
+    @ResponseStatus(HttpStatus.OK)
 
-public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
+    public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
     return bombService.update(id, bomb);
 }
 
     @GetMapping("/bombs")
-    @Operation(summary = "This is endpoint to view all bombs in database", description = "Create request to view all bombs in database", tags = {"Bomb"})
     public Collection<Bomb>getAllBombs() {
         return bombService.view();
     }
@@ -69,19 +69,12 @@ public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
 
     @DeleteMapping("/bombs")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "This is endpoint to delete all bombs in database", description = "NOW THIS ENDPOINT IS BLOCKED!!!", tags = {"Bomb"})
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Bomb by requested ID deleted successfully"),
-            @ApiResponse(responseCode = "400", description = "Invalid input"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified bom request not found"),
-            @ApiResponse(responseCode = "409", description = "Bomb already deleted")})
     public void removeAllBombs() {
         //bombService.deleteAll();
     }
 
     @GetMapping(value = "/bombs/name", params = {"name"})
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "This is endpoint to view bomb by  name", description = "Create request to view bombs by  name", tags = {"Bomb"})
     public Collection<Bomb> findBombByName(String name) {
         return bombService.findBombByName(name);
 
@@ -89,14 +82,12 @@ public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
 
     @GetMapping(value = "/bombs/country", params = {"country"})
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "This is endpoint to view bombs by country", description = "Create request to view bombs by country", tags = {"Bombs"})
     public Collection<Bomb> findBombByCountry(String country) {
         return bombService.findBombByCountry(country);
     }
 
     @GetMapping(value = "/bombs/weight", params = {"weight"})
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "This is endpoint to view bombs by weight", description = "Create request to view bombs by weight", tags = {"Bombs"})
     public Collection<Bomb> findBombByWeight(int weight) {
         return bombService.findBombByWeight(weight);
 
@@ -104,7 +95,6 @@ public Bomb putBomb(@PathVariable("id") Integer id, @RequestBody Bomb bomb) {
 
     @GetMapping(value = "/bombs/nuclears", params = {"nuclearBombs"})
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "This is endpoint to view if the bombs is nuclear", description = "Create request to view if the bomb is nuclear", tags = {"Bombs"})
     public Collection<Bomb> findBombByNuclear() {
         return bombService.findBombByNuclear();
     }

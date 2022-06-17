@@ -8,6 +8,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import java.util.Collection;
+
 @Tag(name = "Bomb", description = "Bomb API" )
 public interface BombSwagger {
 
@@ -35,6 +37,9 @@ public interface BombSwagger {
             @ApiResponse(responseCode = "409", description = "Bomb already deleted")})
     Bomb getBomb(Integer id);
 
+    @Operation(summary = "This is endpoint to view all bombs in database", description = "Create request to view all bombs in database", tags = {"Bomb"})
+    Collection<Bomb>getAllBombs();
+
     @Operation(summary = "This is endpoint to safe delete bomb by ID", description = "Create request to safe delete bomb by ID", tags = {"Bomb"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "OK. Pls see requested bomb by ID"),
@@ -44,7 +49,20 @@ public interface BombSwagger {
     void removeBomb(Integer id);
 
     @Operation(summary = "This is endpoint to delete all bombs in database", description = "NOW THIS ENDPOINT IS BLOCKED!!!", tags = {"Bomb"})
-    void removeAllBombs(Integer id);
+    void removeAllBombs();
+
+    @Operation(summary = "This is endpoint to view bomb by  name", description = "Create request to view bombs by  name", tags = {"Bomb"})
+    Collection<Bomb> findBombByName(String name);
+
+    @Operation(summary = "This is endpoint to view bombs by country", description = "Create request to view bombs by country", tags = {"Bombs"})
+    Collection<Bomb> findBombByCountry(String country);
+
+    @Operation(summary = "This is endpoint to view bombs by weight", description = "Create request to view bombs by weight", tags = {"Bombs"})
+    Collection<Bomb> findBombByWeight(int weight);
+
+    @Operation(summary = "This is endpoint to view if the bombs is nuclear", description = "Create request to view if the bomb is nuclear", tags = {"Bombs"})
+    Collection<Bomb> findBombByNuclear();
+
 
 
 
